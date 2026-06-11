@@ -5,12 +5,9 @@ import { useEffect, useState } from "react";
 export default function Countdown() {
   const targetDate = new Date("2026-08-12T15:00:00").getTime();
 
-  const [mounted, setMounted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
 
   useEffect(() => {
-    setMounted(true);
-
     const updateCountdown = () => {
       setTimeLeft(targetDate - Date.now());
     };
@@ -22,7 +19,7 @@ export default function Countdown() {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  if (!mounted) return null;
+  if (timeLeft === null) return null;
 
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
